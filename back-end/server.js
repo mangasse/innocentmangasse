@@ -1,28 +1,28 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const cors = require('cors')
-require('dotenv').config()
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+require('dotenv').config();
 
-const pollRoutes = require('./routes/pollRoutes')
+const pollRoutes = require('./routes/pollRoutes');
 
-const app = express()
-const PORT = process.env.PORT || 5000
+const app = express();
+const PORT = process.env.PORT || 5000;
 
 // Middlewares
-app.use(cors())
-app.use(express.json())
+app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(express.json());
 
 // Routes
-app.use('/api/polls', pollRoutes)
+app.use('/api/polls', pollRoutes);
 
 // Connexion MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
-    console.log(' Connecté à MongoDB')
+    console.log('Connecté à MongoDB');
     app.listen(PORT, () => {
-      console.log(` Serveur lancé sur http://localhost:${PORT}`)
-    })
+      console.log(`Serveur lancé sur http://localhost:${PORT}`);
+    });
   })
   .catch((err) => {
-    console.error(' Erreur de connexion MongoDB :', err)
-  })
+    console.error('Erreur de connexion MongoDB :', err);
+  });
